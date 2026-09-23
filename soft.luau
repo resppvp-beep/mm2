@@ -1,8 +1,7 @@
 --[[
     MM2 DOMINATOR v3
     Самодостаточный скрипт для Murder Mystery 2
-    Без HttpGet, без внешних CDN
---]]
+]]
 
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
@@ -11,10 +10,8 @@ local Lighting = game:GetService("Lighting")
 local LP = Players.LocalPlayer
 local cam = workspace.CurrentCamera
 
--- ============ RAYFIELD UI ============
+-- ============ UI ============
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
--- (Rayfield сам тянется один раз, это стандартная UI-библиотека для скриптов,
---  если не хочешь вообще ничего качать — скажу как заменить на самописный UI)
 
 local Window = Rayfield:CreateWindow({
     Name = "MM2 DOMINATOR v3",
@@ -27,7 +24,7 @@ local Window = Rayfield:CreateWindow({
 -- ============ STATE ============
 local CFG = {
     FlySpeed = 120, WalkSpeed = 40, JumpPower = 120, FOV = 90,
-    AuraRange = 22, ESP = true, BoxESP = true, GunESP = true, CoinESP = true,
+    AuraRange = 22, ESP = true, GunESP = true, CoinESP = true,
     AutoGun = true, Aura = true, AutoShoot = true, AutoDodge = true,
     Noclip = false, Ghost = false, WaterProt = true, AntiFling = true,
     Fullbright = true
@@ -124,7 +121,7 @@ local function setNoclip(on)
     end
 end
 
--- ============ GHOST MODE ============
+-- ============ GHOST ============
 local function setGhost(on)
     CFG.Ghost = on
     if ghostClone then ghostClone:Destroy() ghostClone = nil end
@@ -145,7 +142,7 @@ local function setGhost(on)
     end
 end
 
--- ============ WATER PROTECTION ============
+-- ============ WATER PROT ============
 local function setWaterProt(on)
     CFG.WaterProt = on
     if waterConn then waterConn:Disconnect() waterConn = nil end
@@ -249,7 +246,7 @@ RunService.RenderStepped:Connect(function()
     end
 end)
 
--- ============ GUN DROP ESP ============
+-- ============ GUN ESP ============
 local gunFolder = Instance.new("Folder", game:GetService("CoreGui"))
 gunFolder.Name = "MM2_DOM_GUN"
 RunService.Heartbeat:Connect(function()
@@ -316,7 +313,7 @@ RunService.Heartbeat:Connect(function()
     end
 end)
 
--- ============ AUTO SHOOT MURDERER ============
+-- ============ AUTO SHOOT ============
 RunService.Heartbeat:Connect(function()
     if not CFG.AutoShoot then return end
     local c = LP.Character if not c then return end
@@ -350,7 +347,7 @@ RunService.Heartbeat:Connect(function()
     end
 end)
 
--- ============ TELEPORT TO PLAYER ============
+-- ============ TP ============
 local function tpTo(plr)
     local hrp = getHRP()
     if not hrp or not plr or not plr.Character then return end
@@ -376,7 +373,7 @@ T2:CreateToggle({ Name = "Coin ESP", CurrentValue = true, Callback = function(v)
 local T3 = Window:CreateTab("Combat", nil)
 T3:CreateToggle({ Name = "Kill Aura (нужен нож)", CurrentValue = true, Callback = function(v) CFG.Aura = v end })
 T3:CreateSlider({ Name = "Aura Range", Range = {5, 60}, Increment = 1, CurrentValue = CFG.AuraRange, Callback = function(v) CFG.AuraRange = v end })
-T3:CreateToggle({ Name = "Auto Shoot Murderer (нужен пистолет)", CurrentValue = true, Callback = function(v) CFG.AutoShoot = v end })
+T3:CreateToggle({ Name = "Auto Shoot Murderer", CurrentValue = true, Callback = function(v) CFG.AutoShoot = v end })
 T3:CreateToggle({ Name = "Auto Dodge", CurrentValue = true, Callback = function(v) CFG.AutoDodge = v end })
 T3:CreateToggle({ Name = "Auto Pickup Gun", CurrentValue = true, Callback = function(v) CFG.AutoGun = v end })
 
@@ -410,7 +407,7 @@ if CFG.WaterProt then setWaterProt(true) end
 if CFG.AntiFling then setAntiFling(true) end
 
 Rayfield:Notify({
-    Title = "MM2 DOMINATOR",
-    Content = "Загружено. RightShift = Fly, X = Noclip, G = Ghost",
+    Title = "MM2 DOMINATOR v3",
+    Content = "Загружено! RightShift=Fly, X=Noclip, G=Ghost",
     Duration = 5
 })
